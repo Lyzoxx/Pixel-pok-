@@ -1,3 +1,11 @@
+let score = 0;
+
+const annule = document.querySelector("#annule");
+annule.addEventListener("click", remiseAZero);
+
+const kirikou = document.querySelector("#kirikou");
+kirikou.innerHTML = score;
+
 const button = document.querySelector("#select-button");
 button.addEventListener("click", selectPokemon);
 
@@ -22,16 +30,18 @@ function startGame() {
   disparait.setAttribute("style", "display:none");
   const reponse = document.querySelector("#reponse");
   reponse.setAttribute("style", "display: block");
-  const annule = document.querySelector("#annule");
   annule.setAttribute("style", "display: inline");
-  annule.addEventListener("click", function () {
-    this.style.display = "none";
-    reponse.setAttribute("style", "display: none");
-    disparait.setAttribute("style", "display: block");
-    resetFunction();
-    hagla.setAttribute("style", "display: inline");
-  });
-  guessPokemon();
+  guessPokemon(5);
+}
+function remiseAZero() {
+  annule.setAttribute("style", "display: none");
+  reponse.setAttribute("style", "display: none");
+  disparait.setAttribute("style", "display: block");
+  resetFunction();
+  hagla.setAttribute("style", "display: inline");
+  score = 0;
+  kirikou.innerHTML = 0;
+  tableau = []
 }
 
 function displayPokemon(pokemonName) {
@@ -43,7 +53,12 @@ function displayPokemon(pokemonName) {
   }
 }
 
-function guessPokemon() {
+function guessPokemon(nbCoups) {
+  if (nbCoups == 0) {
+    alert("voici votre score " + score + "/5");
+    remiseAZero();
+    return;
+  }
   resetFunction();
   const pokemons = [
     "salameche",
@@ -57,24 +72,41 @@ function guessPokemon() {
     "m.mime",
     "rondoudou",
   ];
-  const randomIndex = Math.floor(Math.random() * pokemons.length);
-  const randomPokemon = pokemons[randomIndex];
+  let randomPokemon;
+  do {
+    const randomIndex = Math.floor(Math.random() * pokemons.length);
+    randomPokemon = pokemons[randomIndex];
+  } while (tableau.includes(randomPokemon));
+
+  tableau.push(randomPokemon);
+
   displayPokemon(randomPokemon);
   const boubacar = document.querySelector("#boubacar");
-  boubacar.addEventListener("click", function checkResponse () {
+  boubacar.addEventListener("click", function checkResponse() {
     const bob = document.querySelector("#bob");
-    console.log('response', bob)
-    console.log('response value', bob.value)
+    console.log("response", bob);
+    console.log("response value", bob.value);
     if (bob.value == randomPokemon) {
-      guessPokemon();
-      boubacar.removeEventListener('click', checkResponse)
+      score++;
+      kirikou.innerHTML = score;
+      guessPokemon(nbCoups - 1);
+      boubacar.removeEventListener("click", checkResponse);
     } else {
+      const pokemonName = document.querySelector("#pokemon-name");
+      const blablacar = document.querySelector("#blablacar");
       const erreur = document.querySelector("#erreur");
       erreur.setAttribute("style", "display: block");
+      pokemonName.innerHTML = randomPokemon;
+      blablacar.setAttribute("style", "display: block");
       setTimeout(() => {
         erreur.setAttribute("style", "display: none");
-      }, 1000);
+        blablacar.setAttribute("style", "display: none");
+        guessPokemon(nbCoups - 1);
+        boubacar.removeEventListener("click", checkResponse);
+      }, 1500);
     }
     bob.value = "";
   });
 }
+
+let tableau = [];
