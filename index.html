@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pixel Poké</title>
-    <link rel="stylesheet" href="src/style.css">
-    <link id="stylesheet" rel="stylesheet">
+    <link rel="stylesheet" href="src/style.css" />
+    <link id="stylesheet" rel="stylesheet" />
   </head>
   <body>
-  <h1 class="title">Pixel Poké</h1>
+    <h1 class="title">Pixel Poké</h1>
+    <div class="txt-center">
+      <button id="start-game">Lancer le mini jeu</button>
+      <button id="annule" style="display: none">Annuler</button>
+    </div>
     <div class="container centre">
       <!-- row 1 -->
       <div id="a"></div>
@@ -32,7 +36,7 @@
       <div id="o"></div>
       <div id="p"></div>
     </div>
-    <div class="txt-center"> 
+    <div id="disparait" class="txt-center">
       <select name="Pokemon" id="Pokemon-select">
         <option value="salameche">Salamèche</option>
         <option value="chrysacier">Chrysacier</option>
@@ -47,6 +51,13 @@
       </select>
       <button id="select-button">afficher Pokémon selectioné</button>
       <button id="reset">reset Pokémon</button>
+    </div>
+    <div id="reponse" class="txt-center" style="display: none">
+      <button id="boubacar">valider</button>
+      <input type="text" name="Mamadou" id="bob" />
+      <div id="erreur" class="txt-center" style="display: none">
+        Miskine t'es guez lache l'affaire
+      </div>
     </div>
     <script type="module" src="src/main.js"></script>
   </body>
